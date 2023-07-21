@@ -144,7 +144,7 @@ else
 	fi
 
 # If destination is a directory, append the input filename; if your system
-# does not like double slashes in filenames, you may need to add some logic
+# does not like double slashes in filenames, you may need to add some event
 
 	if [ -d $dst ]
 	then

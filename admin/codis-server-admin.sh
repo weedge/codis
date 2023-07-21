@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+PORT=$1
+
 CODIS_ADMIN="${BASH_SOURCE-$0}"
 CODIS_ADMIN="$(dirname "${CODIS_ADMIN}")"
 CODIS_ADMIN_DIR="$(cd "${CODIS_ADMIN}"; pwd)"
@@ -9,12 +11,12 @@ CODIS_LOG_DIR=$CODIS_ADMIN_DIR/../log
 CODIS_CONF_DIR=$CODIS_ADMIN_DIR/../config
 
 CODIS_SERVER_BIN=$CODIS_BIN_DIR/codis-server
-CODIS_SERVER_PID_FILE=/tmp/redis_6379.pid
+CODIS_SERVER_PID_FILE=/tmp/redis_$PORT.pid
 
-CODIS_SERVER_LOG_FILE=/tmp/redis_6379.log
+CODIS_SERVER_LOG_FILE=/tmp/redis_$PORT.log
 CODIS_SERVER_DAEMON_FILE=$CODIS_LOG_DIR/codis-server.out
 
-CODIS_SERVER_CONF_FILE=$CODIS_CONF_DIR/redis.conf
+CODIS_SERVER_CONF_FILE=$CODIS_CONF_DIR/redis.$PORT.conf
 
 echo $CODIS_SERVER_CONF_FILE
 
@@ -23,7 +25,7 @@ if [ ! -d $CODIS_LOG_DIR ]; then
 fi
 
 
-case $1 in
+case $2 in
 start)
     echo  "starting codis-server ... "
     if [ -f "$CODIS_SERVER_PID_FILE" ]; then
@@ -64,6 +66,6 @@ restart)
     "$0" start
     ;;
 *)
-    echo "Usage: $0 {start|stop|stop-forced|restart}" >&2
+    echo "Usage: $0 {port} {start|stop|stop-forced|restart}" >&2
 
 esac
